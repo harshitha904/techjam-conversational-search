@@ -31,6 +31,8 @@ class Agent:
         }
 ```
 
+
+
 ## Allowed Submission Contents
 
 You may include:
@@ -39,6 +41,8 @@ You may include:
 - small local config files
 - lightweight local assets required by your agent
 - dependency manifest and install instructions
+
+
 
 ## Disallowed Submission Contents
 
@@ -50,6 +54,8 @@ Do not include:
 - code that requires privileged host access
 - code that modifies evaluator files
 - code that depends on undeclared external services for official final scoring
+
+
 
 ## Model Policy
 
@@ -63,6 +69,8 @@ Therefore:
 - if your system has an offline fallback, describe it
 - if your system cannot run without live credentials, say so explicitly
 
+
+
 ## Output Rules
 
 Your `respond(...)` output must follow these rules:
@@ -72,6 +80,8 @@ Your `respond(...)` output must follow these rules:
 - `recommendations` must be ordered best to worst
 - only the first 10 valid unique `parent_asin` values are scored
 - `usage` should report non-negative token counts when available
+
+
 
 ## Reproducibility Requirements
 
@@ -95,9 +105,12 @@ submission/
   src/
 ```
 
+
+
 ## Final Notes
 
 - The organizer reserves the right to run your submission under CPU, memory,
-  timeout, and network restrictions.
+timeout, and network restrictions.
 - The organizer will score only the frozen official artifacts and the output
-  produced by your submitted code in that environment.
+produced by your submitted code in that environment.
+

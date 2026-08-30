@@ -223,7 +223,9 @@ def evaluate(
     sessions: list[dict] = []
     total_prompt_tokens = 0
     total_completion_tokens = 0
-    for sample in samples:
+    total = len(samples)
+    for index, sample in enumerate(samples, start=1):
+        print(f"Evaluating session {index}/{total} ({sample.get('sample_id', '?')})", flush=True)
         session_id = f"public_{uuid.uuid4().hex}"
         agent.reset(session_id, sample["user_profile"])
         target = str(sample["ground_truth"]["parent_asin"])
@@ -300,9 +302,13 @@ def main() -> None:
     parser.add_argument("--catalog", default="data/catalog.jsonl")
     parser.add_argument("--dataset", default="data/public_set.jsonl")
     parser.add_argument("--output", default="results.json")
+    parser.add_argument("--limit", type=int, default=None, help="Evaluate only the first N sessions")
     args = parser.parse_args()
     samples = load_jsonl(args.dataset)
+    if args.limit is not None:
+        samples = samples[: args.limit]
     catalog_ids, categories, products = catalog_index(args.catalog)
+    print(f"Loading agent for {len(samples)} session(s)...", flush=True)
     result = evaluate(Agent(args.catalog), samples, catalog_ids, categories, products)
     Path(args.output).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({key: value for key, value in result.items() if key != "sessions"}, indent=2))
